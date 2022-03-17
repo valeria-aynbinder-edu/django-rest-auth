@@ -7,4 +7,5 @@ urlpatterns = [
     path("public/", views.public_view),
     path("private/", views.private_view),
     path('api-token-auth/', obtain_auth_token),
+    path('signout/', views.sign_out),
 ]

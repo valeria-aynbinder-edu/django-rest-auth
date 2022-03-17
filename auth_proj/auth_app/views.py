@@ -5,6 +5,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework.authentication import BasicAuthentication, TokenAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -68,3 +69,11 @@ Option 1: manual implementation
 def private_view(request):
     print(request.user)
     return Response({'message': 'this is a private view'})
+
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def sign_out(request):
+    Token.objects.filter(key=request.auth.key).delete()
+    return Response()
